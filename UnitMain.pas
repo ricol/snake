@@ -57,21 +57,21 @@ type
     SnakeFlag: TFlag;
     TempFood: TPoint;
     SnakeLength: integer;
-    procedure InitSnakeData(var tmpSnake: array of TPoint);
-    procedure ShowSnake(tmpSnake: array of TPoint);
+    procedure InitSnakeData(var snake: array of TPoint);
+    procedure ShowSnake(snake: array of TPoint);
     procedure ShowWall();
-    procedure ShowData(tmp: TPoint; tmpColor: TColor);
-    procedure ShowFood(tmp: TPoint);
+    procedure ShowData(p: TPoint; color: TColor);
+    procedure ShowFood(f: TPoint);
     procedure ShowBackGround();
-    procedure GenerateFood(var tmpFood: TPoint);
-    procedure AddFoodToSnake(tmpFood: TPoint);
-    procedure SnakeMove(tmpFlag: TFlag);
-    procedure EraseTail(tmp: TPoint);
-    procedure SetArrow(tmp: TPoint; tmpFlag: TFlag);
+    procedure GenerateFood(var food: TPoint);
+    procedure AddFoodToSnake(food: TPoint);
+    procedure SnakeMove(flag: TFlag);
+    procedure EraseTail(point: TPoint);
+    procedure SetArrow(p: TPoint; flag: TFlag);
     function IToX(i: integer): integer;
     function JToY(j: integer): integer;
-    function InSnake(tmp: TPoint; tmpSnake: array of TPoint): boolean;
-    function PointEqualPoint(tmpOne, tmpTwo: TPoint): boolean;
+    function InSnake(p: TPoint; snake: array of TPoint): boolean;
+    function PointEqualPoint(one, two: TPoint): boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -98,28 +98,28 @@ const
   ENDX = MAXX - 2;
   ENDY = MAXY - 2;
 
-procedure TFormMain.AddFoodToSnake(tmpFood: TPoint);
+procedure TFormMain.AddFoodToSnake(food: TPoint);
 var
-  tmpData: array of TPoint;
+  points: array of TPoint;
   i: integer;
 begin
-  SetLength(tmpData, SnakeLength);
+  SetLength(points, SnakeLength);
   for i := Low(Snake) to High(Snake) do
   begin
-    tmpData[i].i := Snake[i].i;
-    tmpData[i].j := Snake[i].j;
+    points[i].i := Snake[i].i;
+    points[i].j := Snake[i].j;
   end;
   inc(SnakeLength);
   SetLength(Snake, SnakeLength);
-  for i := Low(tmpData) to High(tmpData) do
-    Snake[i] := tmpData[i];
-  Snake[High(Snake)] := tmpFood;
-  SetLength(tmpData, 0);
+  for i := Low(points) to High(points) do
+    Snake[i] := points[i];
+  Snake[High(Snake)] := food;
+  SetLength(points, 0);
 end;
 
-procedure TFormMain.EraseTail(tmp: TPoint);
+procedure TFormMain.EraseTail(point: TPoint);
 begin
-  ShowData(tmp, clBlack);
+  ShowData(point, clBlack);
 end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
@@ -177,34 +177,34 @@ begin
     Timer1.Enabled := not Timer1.Enabled;
 end;
 
-procedure TFormMain.GenerateFood(var tmpFood: TPoint);
+procedure TFormMain.GenerateFood(var food: TPoint);
 begin
   repeat
-    tmpFood.i := random(ENDX - 1) + 1;
-    tmpFood.j := random(ENDY - 1) + 1;
-  until not InSnake(tmpFood, Snake);
+    food.i := random(ENDX - 1) + 1;
+    food.j := random(ENDY - 1) + 1;
+  until not InSnake(food, Snake);
 end;
 
-procedure TFormMain.InitSnakeData(var tmpSnake: array of TPoint);
+procedure TFormMain.InitSnakeData(var snake: array of TPoint);
 var
   i: integer;
 begin
-  for i := Low(tmpSnake) to High(tmpSnake) do
+  for i := Low(snake) to High(snake) do
   begin
-    tmpSnake[i].i := i + STARTX;
-    tmpSnake[i].j := STARTY;
+    snake[i].i := i + STARTX;
+    snake[i].j := STARTY;
   end;
 end;
 
-function TFormMain.InSnake(tmp: TPoint;
-  tmpSnake: array of TPoint): boolean;
+function TFormMain.InSnake(p: TPoint;
+  snake: array of TPoint): boolean;
 var
   i: integer;
 begin
   result := false;
-  for i := Low(tmpSnake) to High(tmpSnake) do
+  for i := Low(snake) to High(snake) do
   begin
-    if PointEqualPoint(tmp, tmpSnake[i]) then
+    if PointEqualPoint(p, snake[i]) then
     begin
       result := true;
       break;
@@ -284,24 +284,24 @@ begin
   ShowFood(TempFood);
 end;
 
-function TFormMain.PointEqualPoint(tmpOne, tmpTwo: TPoint): boolean;
+function TFormMain.PointEqualPoint(one, two: TPoint): boolean;
 begin
   result := false;
-  if (tmpOne.i = tmpTwo.i) and (tmpOne.j = tmpTwo.j) then
+  if (one.i = two.i) and (one.j = two.j) then
     result := true;
 end;
 
-procedure TFormMain.SetArrow(tmp: TPoint; tmpFlag: TFlag);
+procedure TFormMain.SetArrow(p: TPoint; flag: TFlag);
 var
-  tmpX, tmpY: integer;
+  x, y: integer;
 begin
-  tmpX := IToX(tmp.i);
-  tmpY := JToY(tmp.j);
-  case tmpFlag of
-    TOLEFT: PaintBoxMain.Canvas.TextOut(tmpX + LEN div 4, tmpY + LEN div 4, '¡û');
-    TOUP: PaintBoxMain.Canvas.TextOut(tmpX + LEN div 4, tmpY + LEN div 4, '¡ü');
-    TORIGHT: PaintBoxMain.Canvas.TextOut(tmpX + LEN div 4, tmpY + LEN div 4, '¡ú');
-    TODOWN: PaintBoxMain.Canvas.TextOut(tmpX + LEN div 4, tmpY + LEN div 4, '¡ý');
+  x := IToX(p.i);
+  y := JToY(p.j);
+  case flag of
+    TOLEFT: PaintBoxMain.Canvas.TextOut(x + LEN div 4, y + LEN div 4, '¡û');
+    TOUP: PaintBoxMain.Canvas.TextOut(x + LEN div 4, y + LEN div 4, '¡ü');
+    TORIGHT: PaintBoxMain.Canvas.TextOut(x + LEN div 4, y + LEN div 4, '¡ú');
+    TODOWN: PaintBoxMain.Canvas.TextOut(x + LEN div 4, y + LEN div 4, '¡ý');
   end;
 end;
 
@@ -312,148 +312,148 @@ begin
   PaintBoxMain.Canvas.Rectangle(0, 0, PaintBoxMain.Width, PaintBoxMain.Height);
 end;
 
-procedure TFormMain.ShowData(tmp: TPoint; tmpColor: TColor);
+procedure TFormMain.ShowData(p: TPoint; color: TColor);
 var
-  tmpX, tmpY: integer;
+  x, y: integer;
 begin
-  tmpX := IToX(tmp.i);
-  tmpY := JToY(tmp.j);
-  PaintBoxMain.Canvas.Pen.Color := tmpColor;
-  PaintBoxMain.Canvas.Brush.Color := tmpColor;
-  PaintBoxMain.Canvas.Rectangle(tmpX, tmpY, tmpX + LEN, tmpY + LEN);
+  x := IToX(p.i);
+  y := JToY(p.j);
+  PaintBoxMain.Canvas.Pen.Color := color;
+  PaintBoxMain.Canvas.Brush.Color := color;
+  PaintBoxMain.Canvas.Rectangle(x, y, x + LEN, y + LEN);
 end;
 
-procedure TFormMain.ShowFood(tmp: TPoint);
+procedure TFormMain.ShowFood(f: TPoint);
 begin
-  ShowData(tmp, clBlue);
+  ShowData(f, clBlue);
 end;
 
-procedure TFormMain.ShowSnake(tmpSnake: array of TPoint);
+procedure TFormMain.ShowSnake(snake: array of TPoint);
 var
   i: integer;
 begin
-  for i := Low(tmpSnake) to High(tmpSnake) do
-    ShowData(tmpSnake[i], clWhite);
-  ShowData(tmpSnake[High(tmpSnake)], clRed);
-  SetArrow(tmpSnake[High(tmpSnake)], SnakeFlag);
+  for i := Low(snake) to High(snake) do
+    ShowData(snake[i], clWhite);
+  ShowData(snake[High(snake)], clRed);
+  SetArrow(snake[High(snake)], SnakeFlag);
 end;
 
 procedure TFormMain.ShowWall;
 var
   i, j: integer;
-  tmpPoint: TPoint;
+  p: TPoint;
 begin
   ShowBackGround();
   for i := 0 to MAXX - 1 do
   begin
-    tmpPoint.i := i;
-    tmpPoint.j := 0;
-    ShowData(tmpPoint, clGreen);
-    tmpPoint.i := i;
-    tmpPoint.j := MAXY - 1;
-    ShowData(tmpPoint, clGreen);
+    p.i := i;
+    p.j := 0;
+    ShowData(p, clGreen);
+    p.i := i;
+    p.j := MAXY - 1;
+    ShowData(p, clGreen);
   end;
   for j := 0 to MAXY - 1 do
   begin
-    tmpPoint.i := 0;
-    tmpPoint.j := j;
-    ShowData(tmpPoint, clGreen);
-    tmpPoint.i := MAXX - 1;
-    tmpPoint.j := j;
-    ShowData(tmpPoint, clGreen);
+    p.i := 0;
+    p.j := j;
+    ShowData(p, clGreen);
+    p.i := MAXX - 1;
+    p.j := j;
+    ShowData(p, clGreen);
   end;
 end;
 
-procedure TFormMain.SnakeMove(tmpFlag: TFlag);
+procedure TFormMain.SnakeMove(flag: TFlag);
 var
-  tmpTail, tmpHead, i: integer;
-  tmpNextHead, tmpPoint: TPoint;
+  tail, head, i: integer;
+  nextHead, point: TPoint;
 begin
-  tmpTail := Low(Snake);
-  tmpHead := High(Snake);
-  tmpNextHead := Snake[tmpHead];
-  tmpPoint := Snake[tmpHead];
-  case tmpFlag of
+  tail := Low(Snake);
+  head := High(Snake);
+  nextHead := Snake[head];
+  point := Snake[head];
+  case flag of
     TOLEFT:
     begin
-      tmpNextHead.i := tmpNextHead.i - 1;
-      if tmpNextHead.i < STARTX then
-        tmpNextHead.i := STARTX;
+      nextHead.i := nextHead.i - 1;
+      if nextHead.i < STARTX then
+        nextHead.i := STARTX;
     end;
     TOUP:
     begin
-      tmpNextHead.j := tmpNextHead.j - 1;
-      if tmpNextHead.j < STARTY then
-        tmpNextHead.j := STARTY;
+      nextHead.j := nextHead.j - 1;
+      if nextHead.j < STARTY then
+        nextHead.j := STARTY;
     end;
     TORIGHT:
     begin
-      tmpNextHead.i := tmpNextHead.i + 1;
-      if tmpNextHead.i > ENDX then
-        tmpNextHead.i := ENDX;
+      nextHead.i := nextHead.i + 1;
+      if nextHead.i > ENDX then
+        nextHead.i := ENDX;
     end;
     TODOWN:
     begin
-      tmpNextHead.j := tmpNextHead.j + 1;
-      if tmpNextHead.j > ENDY then
-        tmpNextHead.j := ENDY;
+      nextHead.j := nextHead.j + 1;
+      if nextHead.j > ENDY then
+        nextHead.j := ENDY;
     end;
   end;
-  if PointEqualPoint(TempFood, tmpNextHead) then
+  if PointEqualPoint(TempFood, nextHead) then
   begin
     AddFoodToSnake(TempFood);
     GenerateFood(TempFood);
     ShowFood(TempFood);
   end
-  else if (not MenuSelfPenetrate.Checked) and InSnake(tmpNextHead, Snake) then
+  else if (not MenuSelfPenetrate.Checked) and InSnake(nextHead, Snake) then
   begin
     exit;
   end
   else
   begin
-    case tmpFlag of
+    case flag of
       TOLEFT:
       begin
-        if Snake[tmpHead].i > STARTX then
+        if Snake[head].i > STARTX then
         begin
-          Snake[tmpHead].i := Snake[tmpHead].i - 1;
-          EraseTail(Snake[tmpTail]);
+          Snake[head].i := Snake[head].i - 1;
+          EraseTail(Snake[tail]);
           for i := Low(Snake) to High(Snake) - 1 do
             Snake[i] := Snake[i + 1];
-          Snake[High(Snake) - 1] := tmpPoint;
+          Snake[High(Snake) - 1] := point;
         end;
       end;
       TOUP:
       begin
-        if Snake[tmpHead].j > STARTY then
+        if Snake[head].j > STARTY then
         begin
-          Snake[tmpHead].j := Snake[tmpHead].j - 1;
-          EraseTail(Snake[tmpTail]);
+          Snake[head].j := Snake[head].j - 1;
+          EraseTail(Snake[tail]);
           for i := Low(Snake) to High(Snake) - 1 do
             Snake[i] := Snake[i + 1];
-          Snake[High(Snake) - 1] := tmpPoint;
+          Snake[High(Snake) - 1] := point;
         end;
       end;
       TORIGHT:
       begin
-        if Snake[tmpHead].i < ENDX then
+        if Snake[head].i < ENDX then
         begin
-          Snake[tmpHead].i := Snake[tmpHead].i + 1;
-          EraseTail(Snake[tmpTail]);
+          Snake[head].i := Snake[head].i + 1;
+          EraseTail(Snake[tail]);
           for i := Low(Snake) to High(Snake) - 1 do
             Snake[i] := Snake[i + 1];
-          Snake[High(Snake) - 1] := tmpPoint;
+          Snake[High(Snake) - 1] := point;
         end;
       end;
       TODOWN:
       begin
-        if Snake[tmpHead].j < ENDY then
+        if Snake[head].j < ENDY then
         begin
-          Snake[tmpHead].j := Snake[tmpHead].j + 1;
-          EraseTail(Snake[tmpTail]);
+          Snake[head].j := Snake[head].j + 1;
+          EraseTail(Snake[tail]);
           for i := Low(Snake) to High(Snake) - 1 do
             Snake[i] := Snake[i + 1];
-          Snake[High(Snake) - 1] := tmpPoint;
+          Snake[High(Snake) - 1] := point;
         end;
       end;
     end;
