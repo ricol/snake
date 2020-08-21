@@ -2,7 +2,7 @@ program Snake;
 
 uses
   Forms,
-  UnitMain in 'UnitMain.pas' {FormMain};
+  Main in 'Main.pas' {FormMain};
 
 {$R *.res}
 

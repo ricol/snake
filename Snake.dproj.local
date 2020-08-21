@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00:00:00.000.dproj,D:\文档\RAD Studio\Projects\Project1.dproj=D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\Snake.dproj</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.pas,D:\文档\RAD Studio\Projects\Unit1.pas=D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\UnitMain.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.dfm,D:\文档\RAD Studio\Projects\Unit1.dfm=D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\UnitMain.dfm</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.dproj,D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\Snake.dproj=D:\文档\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.dfm,D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\UnitMain.dfm=D:\文档\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.pas,D:\文档\RAD Studio\Projects\Delphi\游戏开发\贪吃蛇\UnitMain.pas=D:\文档\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/22 02:55:52.233,C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\Snake\Main.pas=C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\Snake\UnitMain.pas</Transaction>
+    <Transaction>2020/08/22 02:55:52.233,C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\Snake\Main.dfm=C:\Documents and Settings\wangxinghe\My Documents\Programs\Delphi\Game\Snake\UnitMain.dfm</Transaction>
   </Transactions>
 </BorlandProject>

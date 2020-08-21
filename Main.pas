@@ -1,4 +1,4 @@
-unit UnitMain;
+unit Main;
 
 interface
 
